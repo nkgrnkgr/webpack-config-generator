@@ -1,5 +1,14 @@
 import React from 'react';
+import {withStyles} from '@material-ui/core/styles';
 import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+
+const styles = {
+    main: {
+        backgroundColor: '#eeeeee'
+    }
+};
 
 class App extends React.Component {
 
@@ -9,12 +18,15 @@ class App extends React.Component {
     }
 
     render() {
+        const {classes} = this.props;
         return (
-            <div>
+            <div className={classes.main}>
                 <Header/>
+                <Main/>
+                <Footer/>
             </div>
         )
     }
 }
 
-export default App;
+export default withStyles(styles)(App);
