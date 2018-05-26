@@ -1,8 +1,8 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import objPath from "object-path";
 import Option from './Option';
+import Utils from '../Utils';
 
 const styles = theme => ({
     root: {
@@ -16,19 +16,19 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: 'development',
+            mode: 'none',
             entryFile: './src/index.js',
             output: {
                 path: 'public',
                 filename: 'bundle.js',
             },
-        }
+        };
         this._handleChange = this._handleChange.bind(this);
     }
 
     _handleChange = ({name, value}) => {
-        let copyState = Object.create(this.state, {});
-        objPath.set(copyState, name, value);
+        let copyState = Object.assign({}, this.state);
+        Utils.update(copyState, name, value, '_');
         this.setState(copyState);
     };
 
