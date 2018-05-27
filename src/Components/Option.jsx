@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Radio from '@material-ui/core/Radio';
 
+
 const styles = theme => ({
     paper: {
         padding: theme.spacing.unit * 2,
@@ -19,15 +20,17 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: 250,
+        width: 270,
     },
     inputTitle: {
         marginTop: '6px',
         marginRight: '10px',
         width: 100,
     },
+    label: {
+        cursor: 'pointer',
+    }
 });
-
 
 class Option extends React.Component {
 
@@ -45,6 +48,7 @@ class Option extends React.Component {
 
     render() {
         const {classes} = this.props;
+        const config = this.props.config;
         return (
             <form className={classes.container} noValidate autoComplete="off">
                 <Paper className={classes.paper}>
@@ -52,36 +56,20 @@ class Option extends React.Component {
                         Mode
                     </Typography>
                     <div>
-                        <label>
-                            <Radio
-                                checked={this.props.data.mode === 'production'}
-                                onChange={this._handleChange}
-                                value="production"
-                                name="mode"
-                                aria-label="production"
-                            />
-                            production
-                        </label>
-                        <label>
-                            <Radio
-                                checked={this.props.data.mode === 'development'}
-                                onChange={this._handleChange}
-                                value="development"
-                                name="mode"
-                                aria-label="development"
-                            />
-                            development
-                        </label>
-                        <label>
-                            <Radio
-                                checked={this.props.data.mode === 'none'}
-                                onChange={this._handleChange}
-                                value="none"
-                                name="mode"
-                                aria-label="none"
-                            />
-                            none
-                        </label>
+                        {config.mode.map((item, index) => {
+                            return (
+                                <label className={classes.label} key={item+index}>
+                                    <Radio
+                                        checked={this.props.data.mode === item}
+                                        onChange={this._handleChange}
+                                        value={item}
+                                        name="mode"
+                                        aria-label={item}
+                                    />
+                                    {item}
+                                </label>
+                            )
+                        })}
                     </div>
                 </Paper>
                 <Paper className={classes.paper}>
@@ -121,10 +109,51 @@ class Option extends React.Component {
                         margin="normal"
                     />
                 </Paper>
+                <Paper className={classes.paper}>
+                    <Typography variant="headline" className={classes.inputTitle}>
+                        Flamefork
+                    </Typography>
+                    <div>
+                        {config.flamework.map((item, index) => {
+                            return (
+                                <label className={classes.label} key={item+index}>
+                                    <Radio
+                                        checked={this.props.data.flamework === item}
+                                        onChange={this._handleChange}
+                                        value={item}
+                                        name="flamework"
+                                        aria-label={item}
+                                    />
+                                    {item}
+                                </label>
+                            )
+                        })}
+                    </div>
+                </Paper>
+                <Paper className={classes.paper}>
+                    <Typography variant="headline" className={classes.inputTitle}>
+                        Stylesheet
+                    </Typography>
+                    <div>
+                        {config.stylesheet.map((item, index) => {
+                            return (
+                                <label className={classes.label} key={item+index}>
+                                    <Radio
+                                        checked={this.props.data.stylesheet === item}
+                                        onChange={this._handleChange}
+                                        value={item}
+                                        name="stylesheet"
+                                        aria-label={item}
+                                    />
+                                    {item}
+                                </label>
+                            )
+                        })}
+                    </div>
+                </Paper>
             </form>
         )
     }
-
 };
 
 export default withStyles(styles)(Option);

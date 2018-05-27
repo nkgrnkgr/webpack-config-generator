@@ -11,20 +11,30 @@ const styles = theme => ({
     },
 });
 
+const config = {
+    mode: ['production', 'development', 'none'],
+    flamework: ['react', 'Vue', 'none'],
+    stylesheet: ['css', 'sass', 'postCSS', 'none'],
+};
+
 class Main extends React.Component {
+
 
     constructor(props) {
         super(props);
         this.state = {
-            mode: 'none',
+            mode: config.mode[2],
             entryFile: './src/index.js',
             output: {
                 path: 'public',
                 filename: 'bundle.js',
             },
+            flamework: config.flamework[2],
+            stylesheet: config.stylesheet[3],
         };
         this._handleChange = this._handleChange.bind(this);
     }
+
 
     _handleChange = ({name, value}) => {
         let copyState = Object.assign({}, this.state);
@@ -38,7 +48,7 @@ class Main extends React.Component {
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={6}>
-                        <Option data={this.state} handleChange={this._handleChange}/>
+                        <Option data={this.state} config={config} handleChange={this._handleChange}/>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <p>
@@ -52,6 +62,12 @@ class Main extends React.Component {
                         </p>
                         <p>
                             {this.state.output.path}
+                        </p>
+                        <p>
+                            {this.state.flamework}
+                        </p>
+                        <p>
+                            {this.state.stylesheet}
                         </p>
                     </Grid>
                 </Grid>
