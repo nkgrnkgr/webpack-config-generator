@@ -3,6 +3,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Option from './Option';
 import Utils from '../Utils';
+import Code from "./Code";
 
 const styles = theme => ({
     root: {
@@ -13,6 +14,11 @@ const styles = theme => ({
 
 const config = {
     mode: ['production', 'development', 'none'],
+    entryFile: './src/index.js',
+    output: {
+        path: 'public',
+        filename: 'bundle.js',
+    },
     flamework: ['react', 'Vue', 'none'],
     stylesheet: ['css', 'sass', 'postCSS', 'none'],
 };
@@ -24,11 +30,8 @@ class Main extends React.Component {
         super(props);
         this.state = {
             mode: config.mode[2],
-            entryFile: './src/index.js',
-            output: {
-                path: 'public',
-                filename: 'bundle.js',
-            },
+            entryFile: config.entryFile,
+            output: config.output,
             flamework: config.flamework[2],
             stylesheet: config.stylesheet[3],
         };
@@ -37,7 +40,7 @@ class Main extends React.Component {
 
 
     _handleChange = ({name, value}) => {
-        let copyState = Object.assign({}, this.state);
+        let copyState = Object.create(this.state, {});
         Utils.update(copyState, name, value, '_');
         this.setState(copyState);
     };
@@ -51,24 +54,7 @@ class Main extends React.Component {
                         <Option data={this.state} config={config} handleChange={this._handleChange}/>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <p>
-                            {this.state.mode}
-                        </p>
-                        <p>
-                            {this.state.entryFile}
-                        </p>
-                        <p>
-                            {this.state.output.filename}
-                        </p>
-                        <p>
-                            {this.state.output.path}
-                        </p>
-                        <p>
-                            {this.state.flamework}
-                        </p>
-                        <p>
-                            {this.state.stylesheet}
-                        </p>
+                        <Code data={this.state} />
                     </Grid>
                 </Grid>
             </div>

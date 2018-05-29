@@ -27,7 +27,7 @@ const Header = props => {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="title" color="inherit" className={classes.flex}>
-                        Webpack Config Generator
+                        Webpack4 Config Generator
                     </Typography>
                     <IconButton href="https://material-ui.com/style/icons/" target="_blank" className={classes.menuButton} color="inherit" aria-label="Menu">
                         <CodeIcon>
