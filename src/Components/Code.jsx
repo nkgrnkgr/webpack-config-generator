@@ -1,6 +1,5 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import PrettifiedCode from 'react-code-prettify';
 
@@ -36,25 +35,57 @@ class Code extends React.Component {
 }
 
 const createCode = (data) => {
-    return `module.exports = {${modes(data)}
+    return `
+const path = require('path');
+${vueLoaerPlugin(data)}
+module.exports = {${modes(data.mode)}
   entry: '${data.entryFile}',
   output: {
     path: '${data.output.path}',
     filename: '${data.output.filename}',
-  },${modules(data)}
+  },${devServers(data)}${modules(data)},${plugins(data)}
 };
 
 `;
 };
 
-const modes = (data) => {
-    return data.mode === 'none' ? '' : `\n  mode: '${data.mode}',`;
+const vueLoaerPlugin = (data) => {
+
+    return data.flamework === 'Vue' ? `const VueLoaderPlugin = require('vue-loader/lib/plugin')\n` : '';
+
+};
+
+const modes = (mode) => {
+    return mode === 'none' ? '' : `\n  mode: '${mode}',`;
+};
+
+const devServers = (data) => {
+    return `
+  devServer: {
+    contentBase: path.resolve(__dirname, '${data.output.path}'),
+    host: '127.0.0.1',
+    port: '8080',
+    open: true,
+  },`;
 };
 
 const modules = (data) => {
 
     if (data.flamework === 'none' && data.stylesheet === 'none') {
         return '';
+    }
+
+    if (data.flamework === 'Vue') {
+        return `
+  module: {
+    rules: [
+      {
+        test: /\\.vue$/,
+        loader: 'vue-loader'
+      },
+      ${stylesheetsVue(data.stylesheet)}${flameworks(data.flamework)}
+    ]
+  }`;
     }
 
     return `
@@ -115,33 +146,91 @@ const stylesheets = (name) => {
       },`;
 };
 
-const flameworks = (name) => {
+const stylesheetsVue = (name) => {
 
-    let flame;
+    let style = '';
+    let extension = 'css';
 
     if (name === 'none') {
         return '';
     }
 
-    if (name === 'react') {
-        flame = `
+    if (name === 'sass') {
+        extension = 'scss';
+        style = `
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        `;
+    }
+
+    if (name === 'postCSS') {
+        style = `
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              plugins: [
+                require('autoprefixer')({grid: true})
+              ]
+            },
+          },`;
+    }
+
+    return `{
+        test: /\\.${extension}/,
+        use: [
+          'vue-style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: false,
+              sourceMap: true,
+              minimize: true,
+              importLoaders: 1
+            },
+          },${style}
+        ],
+      },`;
+};
+
+const flameworks = (name) => {
+
+    if (name === 'none') {
+        return '';
+    }
+
+    let flame = `
           {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['env', {'modules': false}],
-                'react'
+                ['env', {'modules': false}], ${name === 'react' ? 'react,' : ''}
               ],
             },
           }
         `;
-    }
 
     return `
       {
         test: /\\.js?$/,
         use: [${flame}],
       },`;
+};
+
+const plugins = (data) => {
+
+    if (data.flamework !== 'Vue') {
+        return '';
+    }
+
+    return `
+  plugins: [
+    new VueLoaderPlugin()
+  ],`;
 };
 
 
