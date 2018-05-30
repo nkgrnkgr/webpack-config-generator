@@ -5,7 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import TextField from "@material-ui/core/es/TextField/TextField";
 import Radio from '@material-ui/core/Radio';
 
-
 const styles = theme => ({
     paper: {
         padding: theme.spacing.unit * 2,
@@ -143,6 +142,27 @@ class Option extends React.Component {
                                         onChange={this._handleChange}
                                         value={item}
                                         name="stylesheet"
+                                        aria-label={item}
+                                    />
+                                    {item}
+                                </label>
+                            )
+                        })}
+                    </div>
+                </Paper>
+                <Paper className={classes.paper}>
+                    <Typography variant="headline" className={classes.inputTitle}>
+                        devServer
+                    </Typography>
+                    <div>
+                        {config.devServer.map((item, index) => {
+                            return (
+                                <label className={classes.label} key={item+index}>
+                                    <Radio
+                                        checked={this.props.data.devServer === item}
+                                        onChange={this._handleChange}
+                                        value={item}
+                                        name="devServer"
                                         aria-label={item}
                                     />
                                     {item}

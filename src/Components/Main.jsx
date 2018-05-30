@@ -21,6 +21,7 @@ const config = {
     },
     flamework: ['react', 'Vue', 'none'],
     stylesheet: ['css', 'sass', 'postCSS', 'none'],
+    devServer: ['use', 'none'],
 };
 
 class Main extends React.Component {
@@ -29,11 +30,12 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mode: config.mode[2],
+            mode: config.mode[0],
             entryFile: config.entryFile,
             output: config.output,
-            flamework: config.flamework[2],
-            stylesheet: config.stylesheet[3],
+            flamework: config.flamework[0],
+            stylesheet: config.stylesheet[0],
+            devServer: config.devServer[0],
         };
         this._handleChange = this._handleChange.bind(this);
     }
