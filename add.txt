@@ -1,0 +1,6 @@
+React
+yarn add --D webpack webpack-cli babel-core babel-loader babel-preset-env babel-preset-react webpack-dev-server
+yarn add react react-dom
+
+PostCSS
+yarn add -D webpack webpack-cli webpack-dev-server  style-loader css-loader postcss-loader
