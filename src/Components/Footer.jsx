@@ -24,11 +24,11 @@ const Footer = props => {
     return (
         <footer className={classes.footer}>
             <Typography>
-                created by <a href={'https://twitter.com/nkgrnkgr'} className={classes.atext}>@nokogori</a>
+                created by <a href={'https://twitter.com/nkgrnkgr'} className={classes.atext}>@nkgrnkgr</a>
             </Typography>
             <Typography variant="body2" >
                 <a href={'https://github.com/nkgrnkgr'} className={classes.atext}>Github </a>
-                <img className={classes.iconImage} height="20" width="20" src="https://unpkg.com/simple-icons@latest/icons/github.svg" />
+                <img alt="github logo" className={classes.iconImage} height="20" width="20" src="https://unpkg.com/simple-icons@latest/icons/github.svg" />
             </Typography>
         </footer>
     );

@@ -13,7 +13,7 @@ const styles = theme => ({
 });
 
 const config = {
-    mode: ['production', 'development', 'none'],
+    mode: ['development', 'production', 'none'],
     entryFile: './src/index.js',
     output: {
         path: 'public',
@@ -56,7 +56,7 @@ class Main extends React.Component {
                         <Option data={this.state} config={config} handleChange={this._handleChange}/>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Code data={this.state} />
+                        <Code data={this.state}/>
                     </Grid>
                 </Grid>
             </div>

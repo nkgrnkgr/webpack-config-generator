@@ -1,8 +1,8 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import PrettifiedCode from 'react-code-prettify';
-
 
 const styles = theme => ({
     paper: {
@@ -24,7 +24,9 @@ class Code extends React.Component {
         return (
             <div>
                 <Paper className={classes.paper}>
-                    <h3>webpack.config.js</h3>
+                    <Typography variant="headline">
+                        webpack.config.js
+                    </Typography>
                     <pre>
                         <PrettifiedCode language="javascript" codeString={createCode(this.props.data)}/>
                     </pre>
@@ -41,9 +43,9 @@ ${vueLoaerPlugin(data)}
 module.exports = {${modes(data.mode)}
   entry: '${data.entryFile}',
   output: {
-    path: '${data.output.path}',
+    path: path.resolve(__dirname, '${data.output.path}'),
     filename: '${data.output.filename}',
-  },${devServers(data)}${modules(data)},${plugins(data)}
+  },${devServers(data)}${modules(data)}${plugins(data)}
 };
 
 `;
@@ -60,6 +62,9 @@ const modes = (mode) => {
 };
 
 const devServers = (data) => {
+    if (data.devServer === 'none') {
+        return '';
+    }
     return `
   devServer: {
     contentBase: path.resolve(__dirname, '${data.output.path}'),
@@ -85,14 +90,14 @@ const modules = (data) => {
       },
       ${stylesheetsVue(data.stylesheet)}${flameworks(data.flamework)}
     ]
-  }`;
+  },`;
     }
 
     return `
   module: {
     rules: [${stylesheets(data.stylesheet)}${flameworks(data.flamework)}
     ]
-  }`;
+  },${resolves(data.flamework)}`;
 };
 
 const stylesheets = (name) => {
@@ -113,7 +118,7 @@ const stylesheets = (name) => {
               sourceMap: true,
             },
           },
-        `;
+          'import-glob-loader',`;
     }
 
     if (name === 'postCSS') {
@@ -208,17 +213,27 @@ const flameworks = (name) => {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['env', {'modules': false}], ${name === 'react' ? 'react,' : ''}
+                ['env', {'modules': false}], ${name === 'react' ? `'react',` : ''}
               ],
             },
-          }
+          },
         `;
 
     return `
       {
-        test: /\\.js?$/,
+        test: /\\.js(x)?$/,
         use: [${flame}],
       },`;
+};
+
+const resolves = (name) => {
+    if (name !== 'react') {
+        return '';
+    }
+    return `
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  }`
 };
 
 const plugins = (data) => {
