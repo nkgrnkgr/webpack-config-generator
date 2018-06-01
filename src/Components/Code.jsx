@@ -169,7 +169,7 @@ const stylesheetsVue = (name) => {
               sourceMap: true,
             },
           },
-        `;
+          'import-glob-loader',`;
     }
 
     if (name === 'postCSS') {
