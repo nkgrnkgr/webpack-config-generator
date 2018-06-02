@@ -18,10 +18,6 @@ const styles = theme => ({
 
 class Code extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const {classes} = this.props;
         return (
@@ -31,7 +27,8 @@ class Code extends React.Component {
                         webpack.config.js
                     </Typography>
                     <pre>
-                        <PrettifiedCode language="javascript" className={classes.prettyprint} codeString={createCode(this.props.data)}/>
+                        <PrettifiedCode language="javascript" className={classes.prettyprint}
+                                        codeString={createCode(this.props.data)}/>
                     </pre>
                 </Paper>
             </div>
