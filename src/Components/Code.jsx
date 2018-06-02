@@ -10,6 +10,9 @@ const styles = theme => ({
         marginBottom: theme.spacing.unit * 1,
         color: theme.palette.text.secondary,
     },
+    prettyprint: {
+        padding: 5
+    }
 });
 
 
@@ -28,7 +31,7 @@ class Code extends React.Component {
                         webpack.config.js
                     </Typography>
                     <pre>
-                        <PrettifiedCode language="javascript" codeString={createCode(this.props.data)}/>
+                        <PrettifiedCode language="javascript" className={classes.prettyprint} codeString={createCode(this.props.data)}/>
                     </pre>
                 </Paper>
             </div>
