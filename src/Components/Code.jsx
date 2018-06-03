@@ -1,7 +1,11 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
+import classNames from 'classnames';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import Assignment from '@material-ui/icons/Assignment';
 import PrettifiedCode from 'react-code-prettify';
 
 const styles = theme => ({
@@ -12,11 +16,53 @@ const styles = theme => ({
     },
     prettyprint: {
         padding: 5
-    }
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit,
+    },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    iconSmall: {
+        fontSize: 20,
+    },
 });
 
 
 class Code extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+        };
+    }
+
+    handleOpen = () => {
+        this.setState({open: true});
+    };
+
+    handleClose = () => {
+        this.setState({open: false});
+    };
+
+    copyToClipboad = () => {
+
+        const copyFrom = document.createElement('textarea');
+        for (const element of document.getElementsByClassName('language-javascript')) {
+            copyFrom.textContent = element.innerText;
+        }
+
+        const bodyElm = document.getElementsByTagName("body")[0];
+        bodyElm.appendChild(copyFrom);
+        copyFrom.select();
+
+        document.execCommand('copy');
+
+        this.handleOpen();
+        bodyElm.removeChild(copyFrom);
+
+    };
 
     render() {
         const {classes} = this.props;
@@ -25,9 +71,22 @@ class Code extends React.Component {
                 <Paper className={classes.paper}>
                     <Typography variant="headline">
                         webpack.config.js
+                        <Button className={classes.button} variant="raised" size="small" onClick={this.copyToClipboad}>
+                            <Assignment className={classNames(classes.leftIcon, classes.iconSmall)}/>
+                            Copy to Clipboard
+                        </Button>
+                        <Snackbar
+                            anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                            open={this.state.open}
+                            onClose={this.handleClose}
+                            ContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            message={<span id="message-id">The code was copied to the clipboard 🎉</span>}
+                        />
                     </Typography>
                     <pre>
-                        <PrettifiedCode language="javascript" className={classes.prettyprint}
+                        <PrettifiedCode id="PrettifiedCode" language="javascript" className={classes.prettyprint}
                                         codeString={createCode(this.props.data)}/>
                     </pre>
                 </Paper>
@@ -35,6 +94,7 @@ class Code extends React.Component {
         )
     }
 }
+
 
 const createCode = (data) => {
     return `
