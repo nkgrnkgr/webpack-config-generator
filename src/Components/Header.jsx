@@ -29,7 +29,7 @@ const Header = props => {
                     <Typography variant="title" color="inherit" className={classes.flex}>
                         Webpack4 Config Generator
                     </Typography>
-                    <IconButton href="https://material-ui.com/style/icons/" target="_blank" className={classes.menuButton} color="inherit" aria-label="Menu">
+                    <IconButton href="https://github.com/nkgrnkgr/webpack-config-generator" target="_blank" className={classes.menuButton} color="inherit" aria-label="Menu">
                         <CodeIcon>
                         </CodeIcon>
                     </IconButton>
