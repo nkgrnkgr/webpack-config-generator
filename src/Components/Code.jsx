@@ -1,5 +1,5 @@
 import React from 'react';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -39,11 +39,11 @@ class Code extends React.Component {
     }
 
     handleOpen = () => {
-        this.setState({open: true});
+        this.setState({ open: true });
     };
 
     handleClose = () => {
-        this.setState({open: false});
+        this.setState({ open: false });
     };
 
     copyToClipboad = () => {
@@ -65,18 +65,18 @@ class Code extends React.Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
         return (
             <div>
                 <Paper className={classes.paper}>
                     <Typography variant="headline">
                         webpack.config.js
                         <Button className={classes.button} variant="raised" size="small" onClick={this.copyToClipboad}>
-                            <Assignment className={classNames(classes.leftIcon, classes.iconSmall)}/>
+                            <Assignment className={classNames(classes.leftIcon, classes.iconSmall)} />
                             Copy to Clipboard
                         </Button>
                         <Snackbar
-                            anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                             open={this.state.open}
                             onClose={this.handleClose}
                             ContentProps={{
@@ -87,7 +87,7 @@ class Code extends React.Component {
                     </Typography>
                     <pre>
                         <PrettifiedCode id="PrettifiedCode" language="javascript" className={classes.prettyprint}
-                                        codeString={createCode(this.props.data)}/>
+                            codeString={createCode(this.props.data)} />
                     </pre>
                 </Paper>
             </div>
@@ -282,6 +282,7 @@ const flameworks = (name) => {
     return `
       {
         test: /\\.js(x)?$/,
+        exclude: /node_modules/,
         use: [${flame}],
       },`;
 };
