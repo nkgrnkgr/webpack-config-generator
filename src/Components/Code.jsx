@@ -105,7 +105,8 @@ module.exports = {${modes(data.mode)}
   output: {
     path: path.resolve(__dirname, '${data.output.path}'),
     filename: '${data.output.filename}',
-  },${devServers(data)}${modules(data)}${plugins(data)}
+  },
+  devtool: 'source-map',${devServers(data)}${modules(data)}${plugins(data)}
 };
 
 `;
