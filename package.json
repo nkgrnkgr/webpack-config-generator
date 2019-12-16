@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^1.1.0",
-    "@material-ui/icons": "^1.1.0",
-    "react": "^16.4.0",
-    "react-code-prettify": "^0.0.1",
+    "@material-ui/core": "1.1.0",
+    "@material-ui/icons": "1.1.0",
+    "react": "16.4.0",
+    "react-code-prettify": "0.0.1",
     "react-dom": "^16.4.0",
     "react-scripts": "1.1.4"
   },
@@ -19,7 +19,7 @@
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "gh-pages": "^1.2.0"
+    "babel-cli": "6.26.0",
+    "gh-pages": "1.2.0"
   }
 }
