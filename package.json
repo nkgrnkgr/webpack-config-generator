@@ -9,7 +9,7 @@
     "react": "16.4.0",
     "react-code-prettify": "0.0.1",
     "react-dom": "^16.4.0",
-    "react-scripts": "1.1.4"
+    "react-scripts": "3.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
